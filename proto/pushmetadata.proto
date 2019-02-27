@@ -1,0 +1,30 @@
+// pushmetadata.proto
+// Example for a push via gRPC with a long-live bidirectional stream
+
+syntax = "proto3";
+
+package pushmetadata;
+
+service PushMetaData {
+    rpc Register (RegistrationRequest) returns (stream RegistrationResponse){};
+    rpc Subscribe (stream Clientdata) returns (stream Notification){};
+}
+
+message RegistrationRequest {
+    int32 Clientnumber = 1;
+}
+
+message RegistrationResponse {
+    int32 Clientnumber = 1;
+    string Servername = 2;
+    int32 ConnectedClients = 3;
+}
+
+message Clientdata {
+    int32 Clientnumber = 1;
+    string Name = 2;
+}
+
+message Notification {
+    map<int32,string> Streamers = 1;
+}
